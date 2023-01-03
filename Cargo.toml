@@ -13,8 +13,7 @@ categories = ["web-programming::http-server", "web-programming::websocket"]
 [features]
 default = ["gzip", "brotli"]
 gzip = ["deflate"]
-ssl = ["tiny_http/ssl"]
-rustls = ["tiny_http/ssl-rustls"]
+ssl = ["tiny_http/ssl-rustls"]
 
 [dependencies]
 base64 = "0.13"
