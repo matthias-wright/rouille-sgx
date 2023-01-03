@@ -10,7 +10,10 @@
 use std::fs;
 use std::path::Path;
 
+#[cfg(not(target_env = "sgx"))]
 use filetime;
+
+#[cfg(not(target_env = "sgx"))]
 use time;
 
 use Request;
@@ -77,6 +80,7 @@ use Response;
 /// In this example, a request made to `/static/test.txt` will return the file
 /// `public/test.txt` if it exists.
 ///
+#[cfg(not(target_env = "sgx"))]
 pub fn match_assets<P: ?Sized>(request: &Request, path: &P) -> Response
 where
     P: AsRef<Path>,
@@ -133,6 +137,14 @@ where
     Response::from_file(extension_to_mime_impl(extension), file)
         .with_etag(request, etag)
         .with_public_cache(3600) // TODO: is this a good idea? what if the file is private?
+}
+
+#[cfg(target_env = "sgx")]
+pub fn match_assets<P: ?Sized>(request: &Request, path: &P) -> Response
+where
+    P: AsRef<Path>,
+{
+    unimplemented!("unavailable in an sgx environment")
 }
 
 /// Returns the mime type of a file based on its extension, or `application/octet-stream` if the
