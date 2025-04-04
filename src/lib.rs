@@ -258,12 +258,12 @@ where
 /// Certificate: loaded binary certificate,  
 /// Private key: loaded binary key,  
 /// Refer to tiny-http SSL config class for more details
-pub fn start_ssl_server<A, F>(addr: A, handler: F, ssl_config: tiny_http::SslConfig) -> !
+pub fn start_ssl_server<A, F>(addr: A, handler: F, certificate: Vec<u8>, private_key: Vec<u8>) -> !
 where
     A: ToSocketAddrs,
     F: Send + Sync + 'static + Fn(&Request) -> Response,
 {
-    Server::new_ssl(addr, handler, ssl_config)
+    Server::new_ssl(addr, handler, certificate, private_key)
         .expect("Failed to start ssl server")
         .run();
     panic!("The server socket closed unexpectedly")
@@ -276,13 +276,14 @@ pub fn start_ssl_server_with_pool<A, F>(
     addr: A,
     pool_size: Option<usize>,
     handler: F,
-    ssl_config: tiny_http::SslConfig,
+    certificate: Vec<u8>,
+    private_key: Vec<u8>,
 ) -> !
 where
     A: ToSocketAddrs,
     F: Send + Sync + 'static + Fn(&Request) -> Response,
 {
-    Server::new_ssl(addr, handler, ssl_config)
+    Server::new_ssl(addr, handler, certificate, private_key)
         .expect("Failed to start server")
         .pool_size(pool_size.unwrap_or_else(|| 8 * num_cpus::get()))
         .run();
