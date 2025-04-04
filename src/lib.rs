@@ -453,6 +453,7 @@ where
     #[inline]
     pub fn run(self) {
         for request in self.server.incoming_requests() {
+            println!("IN HTTP SERVER: handle_request");
             self.process(request);
         }
     }
