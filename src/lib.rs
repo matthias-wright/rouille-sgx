@@ -412,11 +412,16 @@ where
     pub fn new_ssl<A>(
         addr: A,
         handler: F,
-        ssl_config: tiny_http::SslConfig,
+        certificate: Vec<u8>,
+        private_key: Vec<u8>,
     ) -> Result<Server<F>, Box<dyn Error + Send + Sync + 'static>>
     where
         A: ToSocketAddrs,
     {
+        let ssl_config = tiny_http::SslConfig {
+            certificate,
+            private_key,
+        };
         let server = tiny_http::Server::https(addr, ssl_config)?;
         Ok(Server {
             server,
