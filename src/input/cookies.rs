@@ -17,8 +17,8 @@
 //! - In order to read a plain text body, see
 //!   [the `plain_text_body` function](fn.plain_text_body.html).
 
+use crate::Request;
 use std::str::Split;
-use Request;
 
 /// Attempts to parse the list of cookies from the request.
 ///
@@ -90,7 +90,7 @@ impl<'a> Iterator for CookiesIter<'a> {
 #[cfg(test)]
 mod test {
     use super::cookies;
-    use Request;
+    use crate::Request;
 
     #[test]
     fn no_cookie() {

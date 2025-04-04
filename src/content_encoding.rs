@@ -25,9 +25,9 @@
 //!     content_encoding::apply(&request, response)
 //! }
 //! ```
-use input;
-use Request;
-use Response;
+use crate::input;
+use crate::Request;
+use crate::Response;
 
 /// Applies content encoding to the response.
 ///
@@ -151,9 +151,9 @@ fn brotli(response: &mut Response) {}
 
 #[cfg(test)]
 mod tests {
-    use content_encoding;
-    use Request;
-    use Response;
+    use crate::content_encoding;
+    use crate::Request;
+    use crate::Response;
 
     // TODO: more tests for encoding stuff
     #[test]

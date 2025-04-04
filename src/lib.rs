@@ -1100,7 +1100,7 @@ impl<'a> Read for RequestBody<'a> {
 
 #[cfg(test)]
 mod tests {
-    use Request;
+    use crate::Request;
 
     #[test]
     fn header() {
